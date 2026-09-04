@@ -223,20 +223,32 @@ function showResult(){
   const r = results[tierKey];
 
   document.getElementById("result-body").innerHTML = `
-    <span class="result-badge">${r.badge}</span>
-    <h1>${r.headline}</h1>
-    <p>${r.body}</p>
+    <div id="capture-area">
+      <div class="capture-brand">The Right Start</div>
+      <span class="result-badge">${r.badge}</span>
+      <h1>${r.headline}</h1>
+      <p>${r.body}</p>
 
-    <div class="tier-card">
-      <h3>${r.tierName}</h3>
-      <p class="tier-includes-label">What's included for you:</p>
-      <ul class="tier-list">
-        ${r.items.map(i => `<li>${i}</li>`).join("")}
-      </ul>
+      <div class="tier-card">
+        <h3>${r.tierName}</h3>
+        <p class="tier-includes-label">What's included for you:</p>
+        <ul class="tier-list">
+          ${r.items.map(i => `<li>${i}</li>`).join("")}
+        </ul>
+      </div>
     </div>
 
+    <button class="btn btn-screenshot" id="btn-screenshot" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 8a2 2 0 0 1 2-2h1.2a1 1 0 0 0 .83-.45l.94-1.4A2 2 0 0 1 10.6 3h2.8a2 2 0 0 1 1.63 1.15l.94 1.4a1 1 0 0 0 .83.45H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        <circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+      Screenshot & save this result
+    </button>
+    <p id="screenshot-status" class="screenshot-status" aria-live="polite"></p>
+
     <div class="screenshot-note">
-      <p><strong>Before you tap join below:</strong> take a screenshot of this page. As soon as you join the group, post the screenshot there, that's how we match your plan to your baby specifically when it's time.</p>
+      <p><strong>Before you tap join below:</strong> take a screenshot of this page (or use the button above). As soon as you join the group, post the screenshot there, that's how we match your plan to your baby specifically when it's time.</p>
     </div>
 
     <div class="cta-block">
@@ -247,6 +259,8 @@ function showResult(){
     <button class="restart-link" id="btn-restart">Retake the quiz</button>
   `;
 
+  document.getElementById("btn-screenshot").addEventListener("click", captureResultScreenshot);
+
   document.getElementById("btn-restart").addEventListener("click", () => {
     currentQuestion = 0;
     Object.keys(answers).forEach(k => delete answers[k]);
@@ -254,4 +268,73 @@ function showResult(){
   });
 
   showScreen(screenResult);
+}
+
+/* =========================================================
+   SCREENSHOT CAPTURE — turns the result card into a real
+   image the user can save or share directly to WhatsApp
+   ========================================================= */
+async function captureResultScreenshot(){
+  const statusEl = document.getElementById("screenshot-status");
+  const btn = document.getElementById("btn-screenshot");
+  const target = document.getElementById("capture-area");
+
+  if(typeof html2canvas === "undefined"){
+    statusEl.textContent = "Couldn't load the screenshot tool, please take a manual screenshot instead.";
+    return;
+  }
+
+  btn.disabled = true;
+  statusEl.textContent = "Preparing your image…";
+
+  try{
+    const canvas = await html2canvas(target, {
+      backgroundColor: "#FCF3E4",
+      scale: Math.min(window.devicePixelRatio || 1, 2.5),
+      useCORS: true
+    });
+
+    canvas.toBlob(async (blob) => {
+      if(!blob){
+        statusEl.textContent = "Something went wrong, please take a manual screenshot instead.";
+        btn.disabled = false;
+        return;
+      }
+
+      const fileName = "my-right-start-result.png";
+      const file = new File([blob], fileName, { type: "image/png" });
+
+      // Try the native share sheet first (works on most modern mobile browsers)
+      if(navigator.canShare && navigator.canShare({ files: [file] })){
+        try{
+          await navigator.share({
+            files: [file],
+            title: "My Right Start result"
+          });
+          statusEl.textContent = "Done, you can now share or save it.";
+          btn.disabled = false;
+          return;
+        } catch(shareErr){
+          // user cancelled the share sheet, fall through to download
+        }
+      }
+
+      // Fallback: trigger a normal download
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      statusEl.textContent = "Saved! Check your downloads or photos.";
+      btn.disabled = false;
+    }, "image/png");
+
+  } catch(err){
+    statusEl.textContent = "Couldn't capture automatically, please take a manual screenshot instead.";
+    btn.disabled = false;
+  }
 }

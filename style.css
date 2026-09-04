@@ -223,6 +223,41 @@ h1,h2,h3{
 }
 .tier-list li{margin-bottom:4px;}
 
+.capture-brand{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  color:var(--forest-dark);
+  font-size:0.95rem;
+  margin-bottom:14px;
+}
+
+.btn-screenshot{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  background:var(--surface);
+  color:var(--forest-dark);
+  border:1.5px solid var(--forest);
+  margin-top:20px;
+}
+.btn-screenshot:disabled{
+  opacity:0.6;
+  cursor:default;
+}
+.btn-screenshot svg{
+  flex-shrink:0;
+}
+
+.screenshot-status{
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:0.85rem;
+  min-height:1.2em;
+  margin:8px 0 0;
+}
+
 .screenshot-note{
   background:#FBF0D9;
   border:1.5px solid var(--marigold);
