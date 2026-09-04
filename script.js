@@ -243,7 +243,7 @@ function showResult(){
         <path d="M4 8a2 2 0 0 1 2-2h1.2a1 1 0 0 0 .83-.45l.94-1.4A2 2 0 0 1 10.6 3h2.8a2 2 0 0 1 1.63 1.15l.94 1.4a1 1 0 0 0 .83.45H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
         <circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"/>
       </svg>
-      Screenshot & save this result
+      Tap to screenshot your result
     </button>
     <p id="screenshot-status" class="screenshot-status" aria-live="polite"></p>
 
@@ -287,6 +287,13 @@ async function captureResultScreenshot(){
   btn.disabled = true;
   statusEl.textContent = "Preparing your image…";
 
+  // Temporarily pad the capture area so text at the edges stays readable
+  // in the exported image, without affecting the normal on-page layout.
+  const originalPadding = target.style.padding;
+  const originalBackground = target.style.background;
+  target.style.padding = "28px 22px";
+  target.style.background = "#FCF3E4";
+
   try{
     const canvas = await html2canvas(target, {
       backgroundColor: "#FCF3E4",
@@ -294,7 +301,10 @@ async function captureResultScreenshot(){
       useCORS: true
     });
 
-    canvas.toBlob(async (blob) => {
+    canvas.toBlob((blob) => {
+      target.style.padding = originalPadding;
+      target.style.background = originalBackground;
+
       if(!blob){
         statusEl.textContent = "Something went wrong, please take a manual screenshot instead.";
         btn.disabled = false;
@@ -302,24 +312,6 @@ async function captureResultScreenshot(){
       }
 
       const fileName = "my-right-start-result.png";
-      const file = new File([blob], fileName, { type: "image/png" });
-
-      // Try the native share sheet first (works on most modern mobile browsers)
-      if(navigator.canShare && navigator.canShare({ files: [file] })){
-        try{
-          await navigator.share({
-            files: [file],
-            title: "My Right Start result"
-          });
-          statusEl.textContent = "Done, you can now share or save it.";
-          btn.disabled = false;
-          return;
-        } catch(shareErr){
-          // user cancelled the share sheet, fall through to download
-        }
-      }
-
-      // Fallback: trigger a normal download
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -334,6 +326,8 @@ async function captureResultScreenshot(){
     }, "image/png");
 
   } catch(err){
+    target.style.padding = originalPadding;
+    target.style.background = originalBackground;
     statusEl.textContent = "Couldn't capture automatically, please take a manual screenshot instead.";
     btn.disabled = false;
   }
