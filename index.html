@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Right Start — Find Your Baby's Feeding Plan</title>
+<meta name="description" content="A 60-second quiz to find the right starting-solids plan for your baby, built for Nigerian mums.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="hdr">
+    <div class="hdr-mark" aria-hidden="true">
+      <svg viewBox="0 0 60 60" width="34" height="34">
+        <circle cx="30" cy="30" r="28" fill="none" stroke="#1F5D3C" stroke-width="3"/>
+        <path d="M18 32c3 8 9 12 12 12s9-4 12-12" fill="none" stroke="#1F5D3C" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="30" cy="24" r="3" fill="#E3A008"/>
+      </svg>
+    </div>
+    <span class="hdr-name">The Right Start</span>
+  </header>
+
+  <!-- SCREEN: Intro -->
+  <section class="screen active" id="screen-intro">
+    <p class="eyebrow">A 60-second quiz</p>
+    <h1>What's the right start for your baby?</h1>
+    <p class="lede">Answer a few quick questions about where you are right now, and get a feeding plan that actually fits your baby, no wahala, no guessing.</p>
+    <button class="btn btn-primary" id="btn-start">Start the quiz</button>
+    <p class="microcopy">Takes less than a minute. No email needed to start.</p>
+  </section>
+
+  <!-- SCREEN: Quiz (questions injected by JS) -->
+  <section class="screen" id="screen-quiz">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div class="q-body" id="q-body"></div>
+    <div class="q-nav">
+      <button class="btn btn-ghost" id="btn-back">Back</button>
+    </div>
+  </section>
+
+  <!-- SCREEN: Result (content injected by JS) -->
+  <section class="screen" id="screen-result">
+    <div id="result-body"></div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
