@@ -2,7 +2,7 @@
    CONFIG — edit these before you launch
    ========================================================= */
 const CONFIG = {
-  whatsappGroupLink: "https://chat.whatsapp.com/GMx5wzytyEQ6PlewITd7T1",
+  whatsappGroupLink: "https://chat.whatsapp.com/REPLACE-WITH-YOUR-GROUP-LINK",
   // If/when you split into tier-specific groups, add links here and
   // the result page will use them instead of the shared link above.
   whatsappTier1: "", // leave blank to use whatsappGroupLink
@@ -102,8 +102,6 @@ const results = {
     headline: "The Right Start Is Exactly What You Need",
     body: "Based on your answers, you're still finding your footing, and that's completely normal. The Right Start gives you the Nigeria-specific answers you've been missing, no more guessing, no more wasted packs.",
     tierName: "The Right Start",
-    price: "₦2,500",
-    oldPrice: "₦7,500",
     items: [
       "The full guide (PDF)",
       "Nigerian Baby Cereal Comparison Chart",
@@ -116,8 +114,6 @@ const results = {
     headline: "You Need More Than Just Information, You Need Backup",
     body: "From your answers, the real struggle isn't just choosing a cereal, it's dealing with everyone else's opinions too. The Confidence Kit gives you the guide plus a cheat sheet to answer your family, and a place to ask real questions when you're unsure.",
     tierName: "The Right Start + Confidence Kit",
-    price: "₦6,000",
-    oldPrice: "₦10,000",
     items: [
       "Everything in The Right Start",
       "Audio version of the guide",
@@ -131,8 +127,6 @@ const results = {
     headline: "Let's Build Your Baby's Personal Feeding Plan",
     body: "You're ready for more than a general guide, you want something made for your baby specifically. The Personal Feeding Plan gives you that, plus priority support when you need it most.",
     tierName: "The Right Start + Personal Feeding Plan",
-    price: "₦12,000",
-    oldPrice: "₦18,000",
     items: [
       "Everything in the Confidence Kit",
       "Personalized recommendation for your baby",
@@ -229,14 +223,19 @@ function showResult(){
 
     <div class="tier-card">
       <h3>${r.tierName}</h3>
-      <div class="tier-price">${r.price} <span style="text-decoration:line-through;color:#9a8c78;font-weight:500;font-size:0.9rem;">${r.oldPrice}</span></div>
+      <p class="tier-includes-label">What's included for you:</p>
       <ul class="tier-list">
         ${r.items.map(i => `<li>${i}</li>`).join("")}
       </ul>
     </div>
 
+    <div class="screenshot-note">
+      <p><strong>Before you tap join below:</strong> take a screenshot of this page. Once you're in the group, send it to the Admin in a DM, that's how your plan gets matched to your baby specifically.</p>
+    </div>
+
     <div class="cta-block">
-      <a class="btn btn-primary" style="display:block;text-decoration:none;text-align:center;" href="${r.whatsapp}" target="_blank" rel="noopener">Join the WhatsApp Group & Get Started</a>
+      <a class="btn btn-primary" style="display:block;text-decoration:none;text-align:center;" href="${r.whatsapp}" target="_blank" rel="noopener">Join the Waitlist Group</a>
+      <p class="cta-subtext">Join other mums getting ready for launch, first access and the best guidance go to the group first.</p>
     </div>
 
     <button class="restart-link" id="btn-restart">Retake the quiz</button>
