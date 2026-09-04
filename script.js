@@ -2,7 +2,7 @@
    CONFIG — edit these before you launch
    ========================================================= */
 const CONFIG = {
-  whatsappGroupLink: "https://chat.whatsapp.com/REPLACE-WITH-YOUR-GROUP-LINK",
+  whatsappGroupLink: "https://chat.whatsapp.com/GMx5wzytyEQ6PlewITd7T1",
   // If/when you split into tier-specific groups, add links here and
   // the result page will use them instead of the shared link above.
   whatsappTier1: "", // leave blank to use whatsappGroupLink
