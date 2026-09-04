@@ -248,7 +248,7 @@ function showResult(){
     <p id="screenshot-status" class="screenshot-status" aria-live="polite"></p>
 
     <div class="screenshot-note">
-      <p><strong>Before you tap join below:</strong> take a screenshot of this page (or use the button above). As soon as you join the group, post the screenshot there, that's how we match your plan to your baby specifically when it's time.</p>
+      <p id="screenshot-instruction"><strong>Before you tap join below:</strong> take a screenshot of this page (or use the button above). As soon as you join the group, post the screenshot there, that's how we match your plan to your baby specifically when it's time.</p>
     </div>
 
     <div class="cta-block">
@@ -321,8 +321,14 @@ async function captureResultScreenshot(){
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      statusEl.textContent = "Saved! Check your downloads or photos.";
-      btn.disabled = false;
+      // Confirm the save, hide the button, and move the person to the next action
+      statusEl.textContent = "✅ Saved to your device!";
+      btn.style.display = "none";
+
+      const instructionEl = document.getElementById("screenshot-instruction");
+      if(instructionEl){
+        instructionEl.innerHTML = `<strong>Your result is saved.</strong> Now tap "Join the Waitlist Group" below, and upload the image you just saved as soon as you're in.`;
+      }
     }, "image/png");
 
   } catch(err){
