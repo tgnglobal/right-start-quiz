@@ -230,7 +230,7 @@ function showResult(){
     </div>
 
     <div class="screenshot-note">
-      <p><strong>Before you tap join below:</strong> take a screenshot of this page. Once you're in the group, send it to the Admin in a DM, that's how your plan gets matched to your baby specifically.</p>
+      <p><strong>Before you tap join below:</strong> take a screenshot of this page. As soon as you join the group, post the screenshot there, that's how we match your plan to your baby specifically when it's time.</p>
     </div>
 
     <div class="cta-block">
