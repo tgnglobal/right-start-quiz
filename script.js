@@ -115,7 +115,9 @@ const results = {
     body: "From your answers, the real struggle isn't just choosing a cereal, it's dealing with everyone else's opinions too. The Confidence Kit gives you the guide plus a cheat sheet to answer your family, and a place to ask real questions when you're unsure.",
     tierName: "The Right Start + Confidence Kit",
     items: [
-      "Everything in The Right Start",
+      "The full guide (PDF)",
+      "Nigerian Baby Cereal Comparison Chart",
+      "First 30 Days of Solids Planner",
       "Audio version of the guide",
       "\"What My Family Says vs What's True\" cheat sheet",
       "30 days of WhatsApp Q&A access"
@@ -128,9 +130,13 @@ const results = {
     body: "You're ready for more than a general guide, you want something made for your baby specifically. The Personal Feeding Plan gives you that, plus priority support when you need it most.",
     tierName: "The Right Start + Personal Feeding Plan",
     items: [
-      "Everything in the Confidence Kit",
+      "The full guide (PDF)",
+      "Nigerian Baby Cereal Comparison Chart",
+      "First 30 Days of Solids Planner",
+      "Audio version of the guide",
+      "\"What My Family Says vs What's True\" cheat sheet",
       "Personalized recommendation for your baby",
-      "Priority WhatsApp support for your first 30 days"
+      "Lifetime priority WhatsApp support"
     ],
     whatsapp: CONFIG.whatsappTier3 || CONFIG.whatsappGroupLink
   }
